@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Attendance System</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: rgb(202, 172, 51);
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .button-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+            color: rgb(216, 78, 78);
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            color: rgb(216, 78, 78);
+            background-color: white;
+            border: 2px solid rgb(216, 78, 78);
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: rgb(216, 78, 78);
+            color: white;
+        }
+        @media (max-width: 768px) {
+            button {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Smart Attendance System</h1>
+        <div class="button-container" style="background-image: url('../photos/back1.jpg');">
+            <button onclick="startAttendance()">Start Attendance</button>
+        </div>
+        <div class="button-container" style="background-image: url('../photos/back2.jpg');">
+            <button onclick="downloadData()">Download Today's Data</button>
+        </div>
+        <div class="button-container" style="background-image: url('../photos/back1.jpg');">
+            <button onclick="closeSystem()">Close Today's System</button>
+        </div>
+    </div>
+    <script>
+     function startAttendance() {
+    fetch('/start')
+        .then(response => response.text())
+        .then(data => {
+            alert(data); // Display the response from the backend
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to start attendance.');
+        });
+}
+
+function downloadData() {
+    window.location.href = '/download'; // This will trigger the download of the CSV file
+}
+
+function closeSystem() {
+    fetch('/close')
+        .then(response => {
+            alert("System is closing...");
+            window.location.reload(); // Optionally reload the page after closing
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('System is closing...');
+        });
+}
+    </script>
+</body>
+</html>
